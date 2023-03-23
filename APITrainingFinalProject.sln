@@ -5,7 +5,9 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project1_HTTPClientLibrary", "Project1_HTTPClientLibrary\Project1_HTTPClientLibrary.csproj", "{049020FA-15E7-4315-AEFD-B4AEFCDAE564}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project2_RestSharpLibrary", "Project2_RestSharpLibrary\Project2_RestSharpLibrary.csproj", "{ADF67661-A5F2-4FAB-B1E2-301410342F3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project2_RestSharpLibrary", "Project2_RestSharpLibrary\Project2_RestSharpLibrary.csproj", "{ADF67661-A5F2-4FAB-B1E2-301410342F3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project3_SOAPAPI", "Project3_SOAPAPI\Project3_SOAPAPI.csproj", "{42415EA4-696D-4D43-B278-4A6518F700EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{ADF67661-A5F2-4FAB-B1E2-301410342F3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADF67661-A5F2-4FAB-B1E2-301410342F3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADF67661-A5F2-4FAB-B1E2-301410342F3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42415EA4-696D-4D43-B278-4A6518F700EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42415EA4-696D-4D43-B278-4A6518F700EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42415EA4-696D-4D43-B278-4A6518F700EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42415EA4-696D-4D43-B278-4A6518F700EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
