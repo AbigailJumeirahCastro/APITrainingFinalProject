@@ -1,4 +1,4 @@
-﻿namespace Project1_HTTPClientLibrary.Resources
+﻿namespace Project2_RestSharpLibrary.Resources
 {
     public class Endpoints
     {

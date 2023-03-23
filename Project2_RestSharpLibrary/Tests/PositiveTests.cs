@@ -1,12 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Project1_HTTPClientLibrary.DataModels;
-using Project1_HTTPClientLibrary.Helpers;
-using Project1_HTTPClientLibrary.Resources;
+using Project2_RestSharpLibrary.DataModels;
+using Project2_RestSharpLibrary.Helpers;
+using Project2_RestSharpLibrary.Resources;
+using RestSharp;
 using System.Net;
+using System.Net.Http;
 
-namespace Project1_HTTPClientLibrary.Tests
+namespace Project2_RestSharpLibrary.Tests
 {
     [TestClass]
     public class PositiveTests : BaseTest
@@ -18,23 +19,24 @@ namespace Project1_HTTPClientLibrary.Tests
         {
             // Delete created data
             foreach (var data in cleanUpList)
-                await BookingHelper.DeleteBooking(httpClient, data.BookingId);
+                await BookingHelper.DeleteBooking(restClient, data.BookingId);
         }
+
 
         [TestMethod]
         public async Task TestBookingCreation()
         {
             // Create booking
-            var createBookingResponse = await BookingHelper.CreateBooking(httpClient);
-            var createBookingResponseData = JsonConvert.DeserializeObject<BookingModel>(createBookingResponse.Content.ReadAsStringAsync().Result);
+            var createBookingResponse = await BookingHelper.CreateBooking(restClient);
+            var createBookingResponseData = JsonConvert.DeserializeObject<BookingModel>(createBookingResponse.Content);
             cleanUpList.Add(createBookingResponseData);
 
             // Assert status code
             Assert.AreEqual(HttpStatusCode.OK, createBookingResponse.StatusCode, "Status code is not equal to 200");
 
             // Get booking details
-            var getBookingResponse = await BookingHelper.GetBooking(httpClient, createBookingResponseData.BookingId);
-            var getBookingResponseData = JsonConvert.DeserializeObject<BookingDetailsModel>(getBookingResponse.Content.ReadAsStringAsync().Result);
+            var getBookingResponse = await BookingHelper.GetBooking(restClient, createBookingResponseData.BookingId);
+            var getBookingResponseData = JsonConvert.DeserializeObject<BookingDetailsModel>(getBookingResponse.Content);
 
             // Assert status code
             Assert.AreEqual(HttpStatusCode.OK, getBookingResponse.StatusCode, "Status code is not equal to 200");
@@ -53,8 +55,8 @@ namespace Project1_HTTPClientLibrary.Tests
         public async Task TestBookingUpdate()
         {
             // Get list of booking IDs
-            var getBookingIDsResponse = await BookingHelper.GetBookingIDs(httpClient);
-            var getBookingIDsResponseData = JsonConvert.DeserializeObject<List<BookingIDModel>>(getBookingIDsResponse.Content.ReadAsStringAsync().Result);
+            var getBookingIDsResponse = await BookingHelper.GetBookingIDs(restClient);
+            var getBookingIDsResponseData = JsonConvert.DeserializeObject<List<BookingIDModel>>(getBookingIDsResponse.Content);
 
             // Proceed if there are existing bookings
             if (getBookingIDsResponseData.Count > 0)
@@ -65,15 +67,15 @@ namespace Project1_HTTPClientLibrary.Tests
                 var randomID = getBookingIDsResponseData[randomAddress].Id;
 
                 // Update booking
-                var updateBookingResponse = await BookingHelper.UpdateBooking(httpClient, randomID);
-                var updateBookingResponseData = JsonConvert.DeserializeObject<BookingDetailsModel>(updateBookingResponse.Content.ReadAsStringAsync().Result);
+                var updateBookingResponse = await BookingHelper.UpdateBooking(restClient, randomID);
+                var updateBookingResponseData = JsonConvert.DeserializeObject<BookingDetailsModel>(updateBookingResponse.Content);
 
                 // Assert status code
                 Assert.AreEqual(HttpStatusCode.OK, updateBookingResponse.StatusCode, "Status code is not equal to 200");
 
                 // Get booking details
-                var getBookingResponse = await BookingHelper.GetBooking(httpClient, randomID);
-                var getBookingResponseData = JsonConvert.DeserializeObject<BookingDetailsModel>(getBookingResponse.Content.ReadAsStringAsync().Result);
+                var getBookingResponse = await BookingHelper.GetBooking(restClient, randomID);
+                var getBookingResponseData = JsonConvert.DeserializeObject<BookingDetailsModel>(getBookingResponse.Content);
 
                 // Assert status code
                 Assert.AreEqual(HttpStatusCode.OK, getBookingResponse.StatusCode, "Status code is not equal to 200");
@@ -95,11 +97,11 @@ namespace Project1_HTTPClientLibrary.Tests
         public async Task TestBookingDeletion()
         {
             // Create booking
-            var createBookingResponse = await BookingHelper.CreateBooking(httpClient);
-            var createBookingResponseData = JsonConvert.DeserializeObject<BookingModel>(createBookingResponse.Content.ReadAsStringAsync().Result);
+            var createBookingResponse = await BookingHelper.CreateBooking(restClient);
+            var createBookingResponseData = JsonConvert.DeserializeObject<BookingModel>(createBookingResponse.Content);
 
             // Delete booking
-            var deleteBookingResponse = await BookingHelper.DeleteBooking(httpClient, createBookingResponseData.BookingId);
+            var deleteBookingResponse = await BookingHelper.DeleteBooking(restClient, createBookingResponseData.BookingId);
 
             // Assert status code
             Assert.AreEqual(HttpStatusCode.Created, deleteBookingResponse.StatusCode, "Status code is not equal to 201");
